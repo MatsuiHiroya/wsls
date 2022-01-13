@@ -1,0 +1,55 @@
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+
+</head>
+<body>
+<p>Hello, you!</p>
+
+<div>room name:<label wicket:id="roomName"></label></div>
+<div>overview:<label wicket:id="roomOverview"></label></div>
+<div>limit time:<label wicket:id="roomLimitTime"></label></div>
+<div><label>your name:</label></div>
+<!--div>random:<label wicket:id="random"></label></div-->
+<!--div wicket:id="randomAjaxWNC">
+    random:<label wicket:id="random"></label>
+    <form wicket:id="randomSubmitForm">
+        <button type="submit" wicket:id="randomSubmitButton">change</button>
+    </form>
+</div-->
+<!--div>
+    random:<label wicket:id="random"></label>
+</div-->
+<div>
+    <form wicket:id="randomSubmitForm">
+        <input type="text" placeholder="only number!" wicket:id="randomTextField">
+        <button type="submit" wicket:id="randomSubmitButton">change</button>
+        <button type="submit" wicket:id="submitRandomButton">提出</button>
+    </form>
+</div>
+
+<!--div>
+    <form wicket:id="submitForm">
+        <button type="submit" wicket:id="submitButton">submit your random</button>
+    </form>
+</div-->
+
+<div>
+    <form wicket:id="deadlineForm">
+        <button type="submit" wicket:id="deadlineButton">close lottery</button>
+    </form>
+</div>
+
+<h2>participants</h2>
+<diV wicket:id="LVWMC">
+<ul>
+    <li wicket:id="participantList">
+        user id:<span wicket:id="participantId"></span><br>
+        random:<span wicket:id="participantRandom"></span>
+    </li>
+</ul>
+</diV>
+
+<div><label>user name:</label></div>
+<div><label>random:</label></div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- Wicket-Spring-Bootの親ファイルを読み込む -->
+    <parent>
+        <groupId>com.giffing.wicket.spring.boot.starter</groupId>
+        <artifactId>wicket-spring-boot-starter-parent</artifactId>
+        <version>3.1.6</version>
+        <!--    <relativePath>pom-parent/spring-boot-24.xml</relativePath>-->
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>wsls</artifactId>
+    <name>wsls</name>
+    <description>aa</description>
+
+    <properties>
+        <java.version>13</java.version>
+        <!-- プロジェクトでは基本的にUTF-8を使う -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 実行形式ファイル名につける日時の形式を指定する -->
+        <maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
+    </properties>
+
+    <dependencies>
+        <!-- Wicket-Spring-Bootを使う -->
+        <dependency>
+            <groupId>com.giffing.wicket.spring.boot.starter</groupId>
+            <artifactId>wicket-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-annotation</artifactId>
+        </dependency>
+
+        <!-- データベースの接続にSpring-JDBCを使う -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <!-- データベース（H2DB）を使う-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring-Bootの開発用ツールを使う -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring-Bootのテスト用ツールを使う -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 文字列を 16 進 Java に変換するためのライブラリ -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+
+        <!-- Wicketのextensionsを使う -->
+        <!-- https://mvnrepository.com/artifact/org.apache.wicket/wicket-extensions -->
+        <!--dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-extensions</artifactId>
+            <version>8.4.0</version>
+        </dependency-->
+
+        <!-- https://mvnrepository.com/artifact/org.wicketstuff/wicketstuff-jwicket-ui-datepicker -->
+        <!--dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-jwicket-ui-datepicker</artifactId>
+            <version>8.4.0</version>
+        </dependency-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        </dependencies>
+
+    <build>
+        <!-- 実行形式ファイル名を設定する -->
+        <finalName>${project.artifactId}-${maven.build.timestamp}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- Spring-Bootプロジェクトを、executable-warとしてビルドする -->
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <!-- ビルドの際に、htmlファイルをクラスフォルダに含める -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+</project>
