@@ -12,10 +12,13 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import java.util.List;
 import java.util.Random;
 
 @MountPath("room")
@@ -23,6 +26,9 @@ public class RoomPage extends WebPage {
 
     private Model randomModel;
     private Label participantRandomLabel;
+    private Label calcResultLabel;
+    private IModel<List<PostedRandom>> postedRandomLM;
+    private ListView postedRandomLV;
 
     @SpringBean
     private IRoomPageService roomPageService;
@@ -50,10 +56,18 @@ public class RoomPage extends WebPage {
 
         // Service からデータベースのユーザ一覧をもらい、Modelにする
         // List型のモデルは Model.ofList(...) で作成する。
-        var postedRandomLM = Model.ofList(roomPageService.selectPostedRandom(roomId));
+
+        postedRandomLM = Model.ofList(roomPageService.selectPostedRandom(roomId));
+
+        /*var t = roomPageService.selectPostedRandom(roomId);
+        t.stream().forEach(i -> {
+           System.out.println("i:"+ i.getUserId());
+           System.out.println("r:"+ i.getRandom());
+            System.out.println(i.getResult());
+        });*/
 
         // List型のモデルを表示する ListView
-        var postedRandomLV = new ListView<>("participantList", postedRandomLM) {
+        postedRandomLV = new ListView<>("participantList", postedRandomLM) {
             @Override
             protected void populateItem(ListItem<PostedRandom> listItem) {
                 // List型のモデルから、 <li>...</li> ひとつ分に分けられたモデルを取り出す
@@ -62,17 +76,18 @@ public class RoomPage extends WebPage {
 
                 // インスタンスに入れ込まれたデータベースの検索結果を、列（＝フィールド変数）ごとにとりだして表示する
                 // add する先が listItem になることに注意。
-                var stringHash = roomPageService.randomToHash(Long.valueOf(participate.getRandom()));
                 var participantIdLabel = new Label("participantId", Model.of(participate.getUserId()));
                 listItem.add(participantIdLabel);
 
+                var stringHash = roomPageService.randomToHash(Long.valueOf(participate.getRandom()));
                 participantRandomLabel = new Label("participantRandom", Model.of(stringHash));
                 participantRandomLabel.setOutputMarkupId(true);
                 listItem.add(participantRandomLabel);
 
                 //抽選数値を公開するラベル　締め切りまで非表示
-                var calcResultLabel = new Label("calcResultLabel",Model.of(""));
-                calcResultLabel.setVisible(false);
+                calcResultLabel = new Label("calcResultLabel",Model.of(participate.getResult()));
+                calcResultLabel.setOutputMarkupId(true);
+                //calcResultLabel.setVisible(true);
                 listItem.add(calcResultLabel);
             }
         };
@@ -155,10 +170,18 @@ public class RoomPage extends WebPage {
         //主催者用の抽選の締め切りボタンとそのフォームを作成
         var deadlineForm = new Form<>("deadlineForm");
         add(deadlineForm);
-        var deadlineButton = new Button("deadlineButton"){
+        var deadlineButton = new AjaxButton("deadlineButton"){
             @Override
-            public void onSubmit(){
-                roomPageService.calculation(roomId);
+            public void onSubmit(AjaxRequestTarget target){
+                //抽選数値などが記述されたリストを受け取る
+                var lotteryResultList = roomPageService.calculation(roomId);
+                //LV内のラベルを可視化
+                calcResultLabel.setVisible(true);
+                //postedRandomLM = Model.ofList(lotteryResultList);
+                //calcResultLabel.setDefaultModelObject(Model.of());
+                //postedRandomLV.setDefaultModelObject(Model.ofList(lotteryResultList));
+                postedRandomLM.setObject(lotteryResultList);
+                target.add(LVWMC);
             }
         };
         deadlineForm.add(deadlineButton);

@@ -42,8 +42,8 @@ public class RoomPageService implements IRoomPageService {
     @Override
     public void insertRandom(Integer roomId,Integer userId,String role,String random){
         //String型のrandomをBigInteger型に変換
-        var bigIntegerRandom = BigInteger.valueOf(Long.parseLong(random));
-        var n = roomPageRepository.insertRandom(roomId,userId,role,bigIntegerRandom);
+        //var bigIntegerRandom = BigInteger.valueOf();
+        var n = roomPageRepository.insertRandom(roomId,userId,role,Long.parseLong(random));
         System.out.println("input line:"+n);
     }
 
@@ -53,7 +53,7 @@ public class RoomPageService implements IRoomPageService {
     }
 
     @Override
-    public List<LotteryResult> calculation(Integer roomId){
+    public List<PostedRandom> calculation(Integer roomId){
         var postedRandomList = roomPageRepository.selectPostedRandomList(roomId);
         //postedRandomList.stream().forEach(i -> System.out.println(i.getRandom()));
         //乱数の合計を取得
@@ -74,7 +74,7 @@ public class RoomPageService implements IRoomPageService {
         //var s = randomToHash(sponsorRandom);
         //hashToLong(s);
 
-        var lotteryResultList = new ArrayList<LotteryResult>();
+        var lotteryResultList = new ArrayList<PostedRandom>();
         postedRandomList.stream()
                     .filter(item -> item.getRole().equals("P"))
                     .forEach(item -> {
@@ -82,16 +82,17 @@ public class RoomPageService implements IRoomPageService {
                         Long preRandom = item.getRandom() + sponsorRandom + totalRandom;
                         //h(ri,rs,sum(r1...rn,rs))を計算
                         var hashedRandom = randomToHash(preRandom);
-                        lotteryResultList.add(new LotteryResult(
+                        lotteryResultList.add(new PostedRandom(
                                 roomId,
                                 item.getUserId(),
+                                "S",
                                 item.getRandom(),
                                 //抽選数値
                                 hashToLong(hashedRandom)));
                     });
 
         lotteryResultList.stream().
-                forEach(i -> System.out.println(i.getUserId() + "の抽選数値:" + i.getCalculatedRandom()));
+                forEach(i -> System.out.println(i.getUserId() + "の抽選数値:" + i.getResult()));
 
         return lotteryResultList;
 

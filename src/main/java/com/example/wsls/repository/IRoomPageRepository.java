@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface IRoomPageRepository {
     public Room findRoom(Integer roomId);
-    public int insertRandom(Integer roomId, Integer userId, String role, BigInteger random);
+    public int insertRandom(Integer roomId, Integer userId, String role, Long random);
     public List<PostedRandom> selectPostedRandomList(Integer roomId);
 }

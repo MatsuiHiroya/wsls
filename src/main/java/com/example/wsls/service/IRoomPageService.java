@@ -13,6 +13,6 @@ public interface IRoomPageService {
     public Room findRoom(Integer roomId);
     public void insertRandom(Integer roomId,Integer userId,String role,String random);
     public List<PostedRandom> selectPostedRandom(Integer roomId);
-    public List<LotteryResult> calculation(Integer roomId);
+    public List<PostedRandom> calculation(Integer roomId);
     public String randomToHash(Long random);
 }

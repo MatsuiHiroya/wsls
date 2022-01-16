@@ -27,13 +27,13 @@ public class RoomPageRepository implements IRoomPageRepository{
     }
 
     @Override
-    public int insertRandom(Integer roomId, Integer userId, String role, BigInteger random){
+    public int insertRandom(Integer roomId, Integer userId, String role, Long random){
         if (checkPostedRandom(roomId,userId) == false) {
             var sql = "delete from POSTED_RANDOM where ROOM_ID = ? and USER_ID = ?";
             jdbcTemplate.update(sql,roomId,userId);
         }
-        var sql = "insert into POSTED_RANDOM(ROOM_ID,USER_ID,ROLE,RANDOM) values (?, ?, ?, ?)";
-        return jdbcTemplate.update(sql,roomId,userId,role,random);
+        var sql = "insert into POSTED_RANDOM(ROOM_ID,USER_ID,ROLE,RANDOM,RESULT) values (?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql,roomId,userId,role,random,0L);
     }
 
     @Override

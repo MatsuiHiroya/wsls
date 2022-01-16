@@ -1,7 +1,6 @@
 package com.example.wsls.bean;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 public class PostedRandom implements Serializable {
 
@@ -10,12 +9,22 @@ public class PostedRandom implements Serializable {
     private Integer userId;
     private String role;
     private Long random;
+    private Long result;
 
     public PostedRandom(){
         roomId = null;
         userId = null;
         role = "";
         random = null;
+        result = 0L;
+    }
+
+    public PostedRandom(Integer roomId, Integer userId, String role, Long random, Long result) {
+        this.roomId = roomId;
+        this.userId = userId;
+        this.role = role;
+        this.random = random;
+        this.result = result;
     }
 
     public Integer getRoomId() {
@@ -48,5 +57,13 @@ public class PostedRandom implements Serializable {
 
     public void setRandom(Long random) {
         this.random = random;
+    }
+
+    public Long getResult() {
+        return result;
+    }
+
+    public void setResult(Long result) {
+        this.result = result;
     }
 }
