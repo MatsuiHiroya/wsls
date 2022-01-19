@@ -12,8 +12,10 @@ public class Room implements Serializable {
     private Timestamp limitTime;
     private boolean flag;
     private Integer authorId;
+    private Integer winners;
 
-    /*public Room(Integer id, String name, String overview, Timestamp limitTime, boolean flag, Integer authorId) {
+
+/*public Room(Integer id, String name, String overview, Timestamp limitTime, boolean flag, Integer authorId) {
         this.id = null;
         this.name = "";
         this.overview = "";
@@ -68,5 +70,13 @@ public class Room implements Serializable {
 
     public void setAuthorId(Integer authorId) {
         this.authorId = authorId;
+    }
+
+    public Integer getWinners() {
+        return winners;
+    }
+
+    public void setWinners(Integer winners) {
+        this.winners = winners;
     }
 }

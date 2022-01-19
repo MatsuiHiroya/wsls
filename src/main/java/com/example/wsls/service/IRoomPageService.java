@@ -15,4 +15,6 @@ public interface IRoomPageService {
     public List<PostedRandom> selectPostedRandom(Integer roomId);
     public List<PostedRandom> calculation(Integer roomId);
     public String randomToHash(Long random);
+    public void closeLottery(Integer roomId);
+    public PostedRandom findSponsorInfo(Integer roomId,Integer sponsorId);
 }

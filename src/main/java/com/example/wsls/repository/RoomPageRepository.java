@@ -49,4 +49,16 @@ public class RoomPageRepository implements IRoomPageRepository{
         else return false;
     }
 
+    @Override
+    public int closeLottery(Integer roomId){
+        var sql = "update ROOM set FLAG = 'false' where ID = ?";
+        return jdbcTemplate.update(sql,roomId);
+    }
+
+    @Override
+    public PostedRandom findSponsorInfo(Integer roomId,Integer sponsorId){
+        var sql = "select * from POSTED_RANDOM where ROOM_ID = ? and USER_ID = ?";
+        return jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(PostedRandom.class),roomId,sponsorId);
+    }
+
 }

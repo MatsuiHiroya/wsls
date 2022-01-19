@@ -12,4 +12,6 @@ public interface IRoomPageRepository {
     public Room findRoom(Integer roomId);
     public int insertRandom(Integer roomId, Integer userId, String role, Long random);
     public List<PostedRandom> selectPostedRandomList(Integer roomId);
+    public int closeLottery(Integer roomId);
+    public PostedRandom findSponsorInfo(Integer roomId,Integer sponsorId);
 }

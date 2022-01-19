@@ -1,14 +1,30 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
-
+<title>抽選システム</title>
 </head>
 <body>
-<p>Hello, you!</p>
 
-<div>room name:<label wicket:id="roomName"></label></div>
-<div>overview:<label wicket:id="roomOverview"></label></div>
-<div>limit time:<label wicket:id="roomLimitTime"></label></div>
-<div><label>your name:</label></div>
+<h1><label wicket:id="roomName"></label></h1>
+<!--div>抽選名：<label wicket:id="roomName"></label></div-->
+<div>概要：<label wicket:id="roomOverview"></label></div>
+<div>期限：<label wicket:id="roomLimitTime"></label></div>
+<div>当選者数：<label wicket:id="numberOfPW"></label></div>
+
+<div wicket:id="winnersWMC">
+    <h2 >当選者の情報</h2>
+    <ul>
+    <li wicket:id="winnersList">
+        当選者のユーザid：<span wicket:id="winnersId"></span><br>
+        当選者が提出した乱数：<span wicket:id="winnersRandom"></span><br>
+        当選者の抽選数値：<span wicket:id="winnersResult">calc result</span>
+    </li>
+    </ul>
+</div>
+
+    <h3>あなたの情報</h3>
+    あなたのユーザid：1
+    <div><label>あなたの名前：P1</label></div>
+
 <!--div>random:<label wicket:id="random"></label></div-->
 <!--div wicket:id="randomAjaxWNC">
     random:<label wicket:id="random"></label>
@@ -19,38 +35,45 @@
 <!--div>
     random:<label wicket:id="random"></label>
 </div-->
-<div>
+
+
+
+<div wicket:id="userInfo">
     <form wicket:id="randomSubmitForm">
-        <input type="text" placeholder="only number!" wicket:id="randomTextField">
-        <button type="submit" wicket:id="randomSubmitButton">change</button>
+        --乱数を提出してください--<br>
+        提出する乱数：<input type="text" placeholder="only number!" wicket:id="randomTextField">
+        <button type="submit" wicket:id="changeRandomButton">乱数値変更</button>
         <button type="submit" wicket:id="submitRandomButton">提出</button>
     </form>
 </div>
+
+
 
 <!--div>
     <form wicket:id="submitForm">
         <button type="submit" wicket:id="submitButton">submit your random</button>
     </form>
 </div-->
+<h3>主催者の情報</h3>
+<div>ユーザid：<label wicket:id="sponsorName"></label></div>
+<div>提出した乱数：<label wicket:id="randomOfSponsor"></label></div>
 
-<div>
-    <form wicket:id="deadlineForm">
-        <button type="submit" wicket:id="deadlineButton">close lottery</button>
-    </form>
-</div>
-
-<h2>participants</h2>
+<h3>参加者の情報</h3>
 <diV wicket:id="LVWMC">
 <ul>
     <li wicket:id="participantList">
-        user id:<span wicket:id="participantId"></span><br>
-        random:<span wicket:id="participantRandom"></span>
-        z:<span wicket:id="calcResultLabel">calc result</span>
+        ユーザid：<span wicket:id="participantId"></span><br>
+        提出した乱数：<span wicket:id="participantRandom"></span><br>
+        抽選数値：<span wicket:id="calcResultLabel">calc result</span>
     </li>
 </ul>
 </diV>
 
-<div><label>user name:</label></div>
-<div><label>random:</label></div>
+<div>
+    <form wicket:id="deadlineForm">
+        <button type="submit" wicket:id="deadlineButton">抽選を締め切る</button>
+    </form>
+</div>
+
 </body>
 </html>
